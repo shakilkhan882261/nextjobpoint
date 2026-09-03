@@ -1,189 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Next Job Point - Latest Govt & Private Jobs Alert</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Next Job Point - Latest Job Notifications</title>
   <style>
     :root {
-      --primary: #0f172a;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
       --bg: #f8fafc;
-      --card: #ffffff;
-      --text-main: #1e293b;
+      --card-bg: #ffffff;
+      --text: #0f172a;
       --text-muted: #64748b;
       --border: #e2e8f0;
-      --tag-bg: #eff6ff;
-      --tag-text: #1d4ed8;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
       background-color: var(--bg);
-      color: var(--text-main);
+      color: var(--text);
       line-height: 1.5;
     }
 
-    .topbar {
-      background: var(--primary);
+    .top-banner {
+      background-color: #0f172a;
       color: #fff;
-      padding: 10px 20px;
-      font-size: 0.875rem;
+      padding: 10px 16px;
+      font-size: 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .topbar a {
+    .top-banner a {
       color: #38bdf8;
-      text-decoration: none;
       font-weight: 600;
+      text-decoration: none;
     }
 
     header {
-      background: var(--card);
+      background-color: var(--card-bg);
       border-bottom: 1px solid var(--border);
-      padding: 18px 20px;
+      padding: 16px;
+    }
+
+    .header-container {
+      max-width: 1000px;
+      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
-    .logo {
-      font-size: 1.5rem;
+    .brand {
+      font-size: 22px;
       font-weight: 800;
-      color: var(--primary);
+      color: #0f172a;
       text-decoration: none;
     }
 
-    .logo span {
-      color: var(--accent);
+    .brand span {
+      color: var(--primary);
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
     }
 
     nav a {
       text-decoration: none;
-      color: var(--text-main);
-      font-weight: 600;
-      margin-left: 20px;
-      font-size: 0.95rem;
-      transition: color 0.2s;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 14px;
     }
 
     nav a:hover {
-      color: var(--accent);
+      color: var(--primary);
     }
 
-    .container {
-      max-width: 1100px;
-      margin: 30px auto;
+    .main-container {
+      max-width: 1000px;
+      margin: 24px auto;
       padding: 0 16px;
     }
 
-    .filter-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 24px;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .search-input {
-      padding: 10px 16px;
-      border: 1px solid var(--border);
+    .search-box {
+      width: 100%;
+      padding: 12px 16px;
       border-radius: 8px;
-      min-width: 260px;
-      font-size: 0.95rem;
+      border: 1px solid var(--border);
       outline: none;
-    }
-
-    .search-input:focus {
-      border-color: var(--accent);
+      font-size: 15px;
+      margin-bottom: 16px;
+      background: #fff;
     }
 
     .category-pills {
       display: flex;
       gap: 8px;
-      flex-wrap: wrap;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
     }
 
     .pill {
-      padding: 8px 14px;
+      padding: 8px 16px;
+      background: #e2e8f0;
+      border: none;
       border-radius: 20px;
-      font-size: 0.85rem;
+      font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      background: #e2e8f0;
-      color: var(--text-main);
-      border: none;
-      transition: all 0.2s;
+      color: #334155;
+      white-space: nowrap;
     }
 
-    .pill.active, .pill:hover {
-      background: var(--accent);
+    .pill.active {
+      background: var(--primary);
       color: #fff;
     }
 
-    .job-list {
+    .job-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
     }
 
     .job-card {
-      background: var(--card);
+      background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
-    .job-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
-    }
-
-    .card-tag {
-      display: inline-block;
-      align-self: flex-start;
-      background: var(--tag-bg);
-      color: var(--tag-text);
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 6px;
-      margin-bottom: 12px;
+    .job-category {
+      font-size: 12px;
       text-transform: uppercase;
-    }
-
-    .card-title {
-      font-size: 1.15rem;
       font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 8px;
+      color: var(--primary);
+      margin-bottom: 6px;
     }
 
-    .card-meta {
-      font-size: 0.85rem;
+    .job-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #1e293b;
+    }
+
+    .job-org {
+      font-size: 14px;
       color: var(--text-muted);
       margin-bottom: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+    }
+
+    .job-meta {
+      font-size: 13px;
+      color: #475569;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .job-meta span {
+      display: block;
     }
 
     .card-footer {
@@ -195,248 +187,219 @@
     }
 
     .last-date {
-      font-size: 0.8rem;
+      font-size: 12px;
       color: #dc2626;
       font-weight: 600;
     }
 
-    .btn-apply {
-      background: var(--accent);
+    .view-btn {
+      background: var(--primary);
       color: #fff;
-      padding: 8px 16px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
       border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s;
     }
 
-    .btn-apply:hover {
-      background: var(--accent-hover);
+    .view-btn:hover {
+      background: var(--primary-hover);
     }
 
-    .modal-overlay {
+    /* Modal Styling */
+    .modal {
+      display: none;
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.6);
-      display: none;
-      justify-content: center;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
       align-items: center;
+      justify-content: center;
       padding: 16px;
-      z-index: 200;
     }
 
     .modal-content {
-      background: var(--card);
-      max-width: 600px;
+      background: #fff;
       width: 100%;
+      max-width: 600px;
       border-radius: 12px;
       padding: 24px;
-      position: relative;
       max-height: 90vh;
       overflow-y: auto;
     }
 
-    .modal-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      font-size: 1.5rem;
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .close-btn {
       background: none;
       border: none;
+      font-size: 24px;
       cursor: pointer;
       color: var(--text-muted);
     }
 
-    .detail-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 16px 0;
+    .modal-body p {
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #334155;
     }
 
-    .detail-table th, .detail-table td {
-      border: 1px solid var(--border);
-      padding: 10px 12px;
-      font-size: 0.9rem;
-      text-align: left;
+    .modal-body strong {
+      color: #0f172a;
     }
 
-    .detail-table th {
-      background: #f1f5f9;
-      width: 35%;
-      color: var(--text-main);
-    }
-
-    .action-links {
+    .modal-actions {
       display: flex;
-      gap: 10px;
-      margin-top: 18px;
+      gap: 12px;
+      margin-top: 20px;
     }
 
-    .btn-secondary {
-      background: #f1f5f9;
-      color: var(--text-main);
-      padding: 10px 16px;
+    .action-btn {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
       border-radius: 6px;
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 14px;
       font-weight: 600;
-      border: 1px solid var(--border);
-      text-align: center;
-      flex: 1;
     }
 
-    .btn-primary-large {
-      background: var(--accent);
+    .btn-apply {
+      background: #16a34a;
       color: #fff;
-      padding: 10px 16px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-align: center;
-      flex: 1;
+    }
+
+    .btn-notif {
+      background: #e2e8f0;
+      color: #1e293b;
     }
 
     footer {
-      background: var(--card);
-      border-top: 1px solid var(--border);
-      padding: 30px 20px;
-      margin-top: 60px;
       text-align: center;
-      font-size: 0.85rem;
+      padding: 30px 16px;
       color: var(--text-muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
     }
 
-    footer .links {
-      margin-bottom: 10px;
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 12px;
     }
 
-    footer .links a {
-      color: var(--text-main);
+    .footer-links a {
+      color: var(--text-muted);
       text-decoration: none;
-      margin: 0 10px;
-      font-weight: 500;
-    }
-
-    @media (max-width: 600px) {
-      .filter-bar {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .action-links {
-        flex-direction: column;
-      }
     }
   </style>
 </head>
 <body>
 
-  <div class="topbar">
+  <div class="top-banner">
     <span>📢 Join our Telegram group for instant job alerts!</span>
     <a href="#">Join Now</a>
   </div>
 
   <header>
-    <a href="#" class="logo">Next Job <span>Point</span></a>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">Govt Jobs</a>
-      <a href="#">Admit Card</a>
-      <a href="#">Results</a>
-    </nav>
+    <div class="header-container">
+      <a href="#" class="brand">Next Job <span>Point</span></a>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Govt Jobs</a>
+        <a href="#">Admit Card</a>
+        <a href="#">Results</a>
+      </nav>
+    </div>
   </header>
 
-  <div class="container">
-    <div class="filter-bar">
-      <input type="text" id="searchInput" class="search-input" placeholder="Search jobs, departments..." onkeyup="filterJobs()" />
-      <div class="category-pills">
-        <button class="pill active" onclick="setCategory('All', this)">All</button>
-        <button class="pill" onclick="setCategory('Govt Job', this)">Govt Jobs</button>
-        <button class="pill" onclick="setCategory('Defense', this)">Defense</button>
-        <button class="pill" onclick="setCategory('Banking', this)">Banking</button>
-      </div>
+  <main class="main-container">
+    <input type="text" id="searchInput" class="search-box" placeholder="Search jobs, departments..." onkeyup="filterJobs()">
+
+    <div class="category-pills">
+      <button class="pill active" onclick="setCategory('All', this)">All</button>
+      <button class="pill" onclick="setCategory('Govt Jobs', this)">Govt Jobs</button>
+      <button class="pill" onclick="setCategory('Defense', this)">Defense</button>
+      <button class="pill" onclick="setCategory('Banking', this)">Banking</button>
     </div>
 
-    <div class="job-list" id="jobGrid"></div>
-  </div>
+    <div class="job-grid" id="jobGrid"></div>
+  </main>
 
-  <div class="modal-overlay" id="jobModal">
+  <div class="modal" id="jobModal">
     <div class="modal-content">
-      <button class="modal-close" onclick="closeModal()">&times;</button>
-      <h2 id="mTitle" style="font-size: 1.3rem; margin-bottom: 8px;"></h2>
-      <p id="mOrg" style="color: var(--text-muted); font-weight: 600; margin-bottom: 16px;"></p>
-
-      <table class="detail-table">
-        <tr><th>Total Vacancies</th><td id="mVacancies"></td></tr>
-        <tr><th>Qualification</th><td id="mQualification"></td></tr>
-        <tr><th>Age Limit</th><td id="mAge"></td></tr>
-        <tr><th>Salary Scale</th><td id="mSalary"></td></tr>
-        <tr><th>Last Date</th><td id="mLastDate" style="color: #dc2626; font-weight: bold;"></td></tr>
-      </table>
-
-      <div class="action-links">
-        <a href="#" target="_blank" id="mPdfLink" class="btn-secondary">Official PDF</a>
-        <a href="#" target="_blank" id="mApplyLink" class="btn-primary-large">Apply Online</a>
+      <div class="modal-header">
+        <h3 class="modal-title" id="mTitle"></h3>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Department:</strong> <span id="mOrg"></span></p>
+        <p><strong>Total Vacancies:</strong> <span id="mVacancies"></span></p>
+        <p><strong>Qualification:</strong> <span id="mQualification"></span></p>
+        <p><strong>Age Limit:</strong> <span id="mAge"></span></p>
+        <p><strong>Salary / Pay Scale:</strong> <span id="mSalary"></span></p>
+        <p><strong>Last Date:</strong> <span id="mLastDate"></span></p>
+      </div>
+      <div class="modal-actions">
+        <a href="#" id="mPdfLink" target="_blank" class="action-btn btn-notif">Download PDF</a>
+        <a href="#" id="mApplyLink" target="_blank" class="action-btn btn-apply">Apply Online</a>
       </div>
     </div>
   </div>
 
   <footer>
-    <div class="links">
-      <a href="#">About Us</a> |
-      <a href="#">Contact</a> |
-      <a href="#">Privacy Policy</a> |
+    <div class="footer-links">
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
       <a href="#">Disclaimer</a>
     </div>
-    <p>© 2026 Next Job Point. All rights reserved.</p>
+    <p>&copy; 2026 Next Job Point. All rights reserved.</p>
   </footer>
 
   <script>
     const jobs = [
       {
         id: 1,
-        title: "India Post GDS Recruitment 2026",
-        org: "India Post Department",
-        category: "Govt Job",
-        vacancies: "30,000+ Posts",
-        qualification: "10th Standard Passed",
-        age: "18 - 40 Years",
-        salary: "Rs. 10,000 - 29,380/-",
-        lastDate: "30 Sep 2026",
-        pdfLink: "#",
-        applyLink: "#"
+        title: "Assam Police Sub Inspector Recruitment",
+        org: "SLPRB Assam",
+        category: "Defense",
+        vacancies: "750 Posts",
+        qualification: "Graduate in any stream",
+        age: "20 - 26 Years",
+        salary: "Rs. 22,000 - 97,000/-",
+        lastDate: "25 Oct 2026",
+        pdfLink: "https://slprbassam.in",
+        applyLink: "https://slprbassam.in"
       },
       {
         id: 2,
-        title: "SSC Constable GD Examination",
+        title: "SSC Combined Graduate Level (CGL) 2026",
         org: "Staff Selection Commission",
-        category: "Defense",
-        vacancies: "26,146 Posts",
-        qualification: "10th / Matriculation",
-        age: "18 - 23 Years",
-        salary: "Rs. 21,700 - 69,100/-",
-        lastDate: "15 Oct 2026",
-        pdfLink: "#",
-        applyLink: "#"
+        category: "Govt Jobs",
+        vacancies: "14,000+ Posts",
+        qualification: "Bachelor Degree",
+        age: "18 - 32 Years",
+        salary: "Pay Level 4 to Level 8",
+        lastDate: "15 Nov 2026",
+        pdfLink: "https://ssc.gov.in",
+        applyLink: "https://ssc.gov.in"
       },
       {
         id: 3,
-        title: "SBI Junior Associate (Clerk)",
-        org: "State Bank of India",
-        category: "Banking",
-        vacancies: "8,773 Posts",
-        qualification: "Any Graduation Degree",
-        age: "20 - 28 Years",
-        salary: "Rs. 26,000 - 32,000/- Approx",
-        lastDate: "20 Oct 2026",
-        pdfLink: "#",
-        applyLink: "#"
-      }
-      {
-        id: 5,
         title: "IBPS RRB Recruitment 2026 – 13,706 Officer & Office Assistant Posts",
         org: "Institute of Banking Personnel Selection (IBPS)",
         category: "Banking",
@@ -447,8 +410,7 @@
         lastDate: "21 Sep 2026",
         pdfLink: "https://www.ibps.in",
         applyLink: "https://www.ibps.in"
-      },
-
+      }
     ];
 
     let currentCategory = "All";
@@ -458,7 +420,7 @@
       grid.innerHTML = "";
 
       if (items.length === 0) {
-        grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">No updates found.</p>`;
+        grid.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;'>No job notifications found.</p>";
         return;
       }
 
@@ -467,17 +429,17 @@
         card.className = "job-card";
         card.innerHTML = `
           <div>
-            <span class="card-tag">${job.category}</span>
-            <h3 class="card-title">${job.title}</h3>
-            <div class="card-meta">
-              <span>🏛️ <strong>Dept:</strong> ${job.org}</span>
+            <span class="job-category">${job.category}</span>
+            <h3 class="job-title">${job.title}</h3>
+            <div class="job-org">${job.org}</div>
+            <div class="job-meta">
+              <span>👥 <strong>Vacancies:</strong> ${job.vacancies}</span>
               <span>🎓 <strong>Qual:</strong> ${job.qualification}</span>
-              <span>👥 <strong>Vacancy:</strong> ${job.vacancies}</span>
             </div>
           </div>
           <div class="card-footer">
-            <span class="last-date">End: ${job.lastDate}</span>
-            <button onclick="openModal(${job.id})" class="btn-apply">Details & Apply</button>
+            <span class="last-date">Last Date: ${job.lastDate}</span>
+            <button class="view-btn" onclick="openModal(${job.id})">Details</button>
           </div>
         `;
         grid.appendChild(card);
@@ -488,8 +450,7 @@
       const query = document.getElementById("searchInput").value.toLowerCase();
       const filtered = jobs.filter(job => {
         const matchesCategory = currentCategory === "All" || job.category === currentCategory;
-        const matchesQuery = job.title.toLowerCase().includes(query) || 
-                             job.org.toLowerCase().includes(query);
+        const matchesQuery = job.title.toLowerCase().includes(query) || job.org.toLowerCase().includes(query);
         return matchesCategory && matchesQuery;
       });
       renderJobs(filtered);
@@ -524,12 +485,15 @@
       document.getElementById("jobModal").style.display = "none";
     }
 
-    window.onclick = function(e) {
+    window.onclick = function(event) {
       const modal = document.getElementById("jobModal");
-      if (e.target === modal) closeModal();
+      if (event.target === modal) {
+        closeModal();
+      }
     };
 
     renderJobs(jobs);
   </script>
 </body>
-</html>
+      </html>
+             
