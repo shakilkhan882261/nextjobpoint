@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Next Job Point - Latest Govt & Private Jobs Alert</title>
+  <style>
+    :root {
+      --primary: #0f172a;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --tag-bg: #eff6ff;
+      --tag-text: #1d4ed8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .topbar {
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 0.875rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .topbar a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 600;
+      margin-left: 20px;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 16px;
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .search-input {
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      min-width: 260px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+
+    .category-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #e2e8f0;
+      color: var(--text-main);
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .pill.active, .pill:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .job-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .job-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .job-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    }
+
+    .card-tag {
+      display: inline-block;
+      align-self: flex-start;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .card-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .card-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .last-date {
+      font-size: 0.8rem;
+      color: #dc2626;
+      font-weight: 600;
+    }
+
+    .btn-apply {
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-apply:hover {
+      background: var(--accent-hover);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      z-index: 200;
+    }
+
+    .modal-content {
+      background: var(--card);
+      max-width: 600px;
+      width: 100%;
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .detail-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+
+    .detail-table th, .detail-table td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    .detail-table th {
+      background: #f1f5f9;
+      width: 35%;
+      color: var(--text-main);
+    }
+
+    .action-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: var(--text-main);
+      padding: 10px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      text-align: center;
+      flex: 1;
+    }
+
+    .btn-primary-large {
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: center;
+      flex: 1;
+    }
+
+    footer {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 30px 20px;
+      margin-top: 60px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    footer .links {
+      margin-bottom: 10px;
+    }
+
+    footer .links a {
+      color: var(--text-main);
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 500;
+    }
+
+    @media (max-width: 600px) {
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .action-links {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <span>📢 Join our Telegram group for instant job alerts!</span>
+    <a href="#">Join Now</a>
+  </div>
+
+  <header>
+    <a href="#" class="logo">Next Job <span>Point</span></a>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Govt Jobs</a>
+      <a href="#">Admit Card</a>
+      <a href="#">Results</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="filter-bar">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search jobs, departments..." onkeyup="filterJobs()" />
+      <div class="category-pills">
+        <button class="pill active" onclick="setCategory('All', this)">All</button>
+        <button class="pill" onclick="setCategory('Govt Job', this)">Govt Jobs</button>
+        <button class="pill" onclick="setCategory('Defense', this)">Defense</button>
+        <button class="pill" onclick="setCategory('Banking', this)">Banking</button>
+      </div>
+    </div>
+
+    <div class="job-list" id="jobGrid"></div>
+  </div>
+
+  <div class="modal-overlay" id="jobModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <h2 id="mTitle" style="font-size: 1.3rem; margin-bottom: 8px;"></h2>
+      <p id="mOrg" style="color: var(--text-muted); font-weight: 600; margin-bottom: 16px;"></p>
+
+      <table class="detail-table">
+        <tr><th>Total Vacancies</th><td id="mVacancies"></td></tr>
+        <tr><th>Qualification</th><td id="mQualification"></td></tr>
+        <tr><th>Age Limit</th><td id="mAge"></td></tr>
+        <tr><th>Salary Scale</th><td id="mSalary"></td></tr>
+        <tr><th>Last Date</th><td id="mLastDate" style="color: #dc2626; font-weight: bold;"></td></tr>
+      </table>
+
+      <div class="action-links">
+        <a href="#" target="_blank" id="mPdfLink" class="btn-secondary">Official PDF</a>
+        <a href="#" target="_blank" id="mApplyLink" class="btn-primary-large">Apply Online</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="links">
+      <a href="#">About Us</a> |
+      <a href="#">Contact</a> |
+      <a href="#">Privacy Policy</a> |
+      <a href="#">Disclaimer</a>
+    </div>
+    <p>© 2026 Next Job Point. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const jobs = [
+      {
+        id: 1,
+        title: "India Post GDS Recruitment 2026",
+        org: "India Post Department",
+        category: "Govt Job",
+        vacancies: "30,000+ Posts",
+        qualification: "10th Standard Passed",
+        age: "18 - 40 Years",
+        salary: "Rs. 10,000 - 29,380/-",
+        lastDate: "30 Sep 2026",
+        pdfLink: "#",
+        applyLink: "#"
+      },
+      {
+        id: 2,
+        title: "SSC Constable GD Examination",
+        org: "Staff Selection Commission",
+        category: "Defense",
+        vacancies: "26,146 Posts",
+        qualification: "10th / Matriculation",
+        age: "18 - 23 Years",
+        salary: "Rs. 21,700 - 69,100/-",
+        lastDate: "15 Oct 2026",
+        pdfLink: "#",
+        applyLink: "#"
+      },
+      {
+        id: 3,
+        title: "SBI Junior Associate (Clerk)",
+        org: "State Bank of India",
+        category: "Banking",
+        vacancies: "8,773 Posts",
+        qualification: "Any Graduation Degree",
+        age: "20 - 28 Years",
+        salary: "Rs. 26,000 - 32,000/- Approx",
+        lastDate: "20 Oct 2026",
+        pdfLink: "#",
+        applyLink: "#"
+      }
+    ];
+
+    let currentCategory = "All";
+
+    function renderJobs(items) {
+      const grid = document.getElementById("jobGrid");
+      grid.innerHTML = "";
+
+      if (items.length === 0) {
+        grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">No updates found.</p>`;
+        return;
+      }
+
+      items.forEach(job => {
+        const card = document.createElement("div");
+        card.className = "job-card";
+        card.innerHTML = `
+          <div>
+            <span class="card-tag">${job.category}</span>
+            <h3 class="card-title">${job.title}</h3>
+            <div class="card-meta">
+              <span>🏛️ <strong>Dept:</strong> ${job.org}</span>
+              <span>🎓 <strong>Qual:</strong> ${job.qualification}</span>
+              <span>👥 <strong>Vacancy:</strong> ${job.vacancies}</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="last-date">End: ${job.lastDate}</span>
+            <button onclick="openModal(${job.id})" class="btn-apply">Details & Apply</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterJobs() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = jobs.filter(job => {
+        const matchesCategory = currentCategory === "All" || job.category === currentCategory;
+        const matchesQuery = job.title.toLowerCase().includes(query) || 
+                             job.org.toLowerCase().includes(query);
+        return matchesCategory && matchesQuery;
+      });
+      renderJobs(filtered);
+    }
+
+    function setCategory(cat, element) {
+      currentCategory = cat;
+      document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+      element.classList.add("active");
+      filterJobs();
+    }
+
+    function openModal(id) {
+      const job = jobs.find(j => j.id === id);
+      if (!job) return;
+
+      document.getElementById("mTitle").innerText = job.title;
+      document.getElementById("mOrg").innerText = job.org;
+      document.getElementById("mVacancies").innerText = job.vacancies;
+      document.getElementById("mQualification").innerText = job.qualification;
+      document.getElementById("mAge").innerText = job.age;
+      document.getElementById("mSalary").innerText = job.salary;
+      document.getElementById("mLastDate").innerText = job.lastDate;
+
+      document.getElementById("mPdfLink").href = job.pdfLink;
+      document.getElementById("mApplyLink").href = job.applyLink;
+
+      document.getElementById("jobModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("jobModal").style.display = "none";
+    }
+
+    window.onclick = function(e) {
+      const modal = document.getElementById("jobModal");
+      if (e.target === modal) closeModal();
+    };
+
+    renderJobs(jobs);
+  </script>
+</body>
+</html>
